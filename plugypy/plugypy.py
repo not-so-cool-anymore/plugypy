@@ -72,10 +72,3 @@ class PluginManager():
     
     def __verify_plugin_ownership(self):
         return True
-    
-
-
-#plugin_manager = PluginManager(os.path.dirname(os.path.realpath(__file__)) + '/plugins', '/home/ivan/Downloads/plg_conf.json')
-
-#plugins = plugin_manager.import_plugins()
-#plugin_manager.execute_plugin(plugins[0])

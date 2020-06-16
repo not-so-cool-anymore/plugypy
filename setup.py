@@ -5,7 +5,7 @@ with open('README.MD') as readme:
 
 setuptools.setup(
     name='PlugyPy',
-    version='0.1.1',
+    version='0.1.2',
     author='Ivan Zlatanov',
     author_email='me@iv.an',
     descriptio='A lightweigh Python plugin system',

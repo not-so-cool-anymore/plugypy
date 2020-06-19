@@ -2,7 +2,7 @@ import os
 import pwd
 import sys
 import json
-from plugypy_errors import MainFunctionNotFoundError
+from plugypy import MainFunctionNotFoundError
 
 class PluginManager():
     def __init__(self, plugins_folder_location, config_file_location):
@@ -21,7 +21,7 @@ class PluginManager():
         for content in plugins_directory_content:
             content_location = self.__plugins_folder_location + '/' + content
 
-            if os.path.isdir(content_location) or content == '__init__.py' or content.endswith('.pyc'):
+            if os.path.isdir(content_location) or content == '__init__.py' or content.endswith('.pyc') or content.endswith('.json'):
                 continue
             
             plugin_name = content.replace('.py', '')

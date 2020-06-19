@@ -5,10 +5,10 @@ with open('README.MD') as readme:
 
 setuptools.setup(
     name='PlugyPy',
-    version='0.1.2',
+    version='0.1.4',
     author='Ivan Zlatanov',
     author_email='me@iv.an',
-    descriptio='A lightweigh Python plugin system',
+    description='A lightweigh Python plugin system',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='',

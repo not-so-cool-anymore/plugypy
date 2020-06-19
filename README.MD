@@ -72,7 +72,7 @@ An example for a config file is:
         "enabled" : true
         },
         {
-        "name" : "demo_plugin_0",
+        "name" : "demo_plugin_1",
         "main_function" : "main_one",
         "enabled" : false
         },

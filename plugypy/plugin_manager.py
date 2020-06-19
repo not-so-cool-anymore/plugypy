@@ -2,7 +2,7 @@ import os
 import pwd
 import sys
 import json
-from plugypy import MainFunctionNotFoundError
+from .plugypy_errors import MainFunctionNotFoundError
 
 class PluginManager():
     def __init__(self, plugins_folder_location, config_file_location):

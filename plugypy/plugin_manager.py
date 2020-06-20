@@ -5,9 +5,10 @@ import json
 from .plugypy_errors import MainFunctionNotFoundError
 
 class PluginManager():
-    def __init__(self, plugins_folder_location, config_file_location):
+    def __init__(self, plugins_folder_location, config_file_location, will_verify_ownership=False):
         self.__plugins_folder_location = plugins_folder_location
         self.__config_file_location = config_file_location
+        self.__will_verify_plugins_ownership = will_verify_ownership
 
         self.__load__plugins_configuration()
         self.__plugins = None
@@ -35,7 +36,7 @@ class PluginManager():
     def execute_plugin(self, plugin, args=None):
         plugin_name = plugin['name']
         plugin_config = self.__find_plugin_config(plugin_name)
-            
+        
         if plugin_config == None or not plugin_config['enabled']:
             return None
 
@@ -52,7 +53,7 @@ class PluginManager():
             else:
                 return getattr(function_file, function_name)(*args)
 
-        except (AttributeError, ) as err:
+        except (AttributeError,) as err:
             if type(err) == AttributeError:
                 raise MainFunctionNotFoundError() from None
             else:

@@ -1,0 +1,17 @@
+[
+	{
+	"name" : "print_message",
+	"main_function" : "print_message",
+	"enabled" : true
+	},
+	{
+	"name" : "print_argument",
+	"main_function" : "print_argument",
+	"enabled" : true
+	},
+	{
+	"name" : "sum",
+	"main_function" : "sum_arguments",
+	"enabled" : true
+	}
+]

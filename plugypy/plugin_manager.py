@@ -25,6 +25,9 @@ class PluginManager():
                 continue
             
             plugin_name = content.replace('.py', '')
+            
+            if self.__find_plugin_config(plugin_name) == None:
+                continue
 
             plugin = __import__(plugin_name)
             plugins.append({'name' : plugin_name, 'plugin' : plugin})
@@ -51,18 +54,19 @@ class PluginManager():
         return None
 
     def execute_plugin(self, plugin, args=None, is_forced=False):
+        result = None
         plugin_name = plugin['name']
         plugin_config = self.__find_plugin_config(plugin_name)
-        
-        if plugin_config == None or not plugin_config['enabled'] and not is_forced:
-            return None
 
-        if not is_forced:
+        if is_forced:
+            result = self.__execute_function(plugin['plugin'], 'main', args)
+        else:
+            if plugin_config == None or not plugin_config['enabled']:
+                return None
+            
             plugin_main_function = plugin_config['main_function']
             result = self.__execute_function(plugin['plugin'], plugin_main_function, args)
-        else:
-            result = self.__execute_function(plugin['plugin'], 'main', args)
-            
+
         return result
 
     def __execute_function(self, function_file, function_name, args=None):

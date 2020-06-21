@@ -32,21 +32,27 @@ The plugin manager object has one extra feature - plugin ownership verification.
 belongs to the current user (or, if `sudo` is used to run the program - the `sudo` caller).
 This feature can be activated via parsing one extra argument - `will_verify_ownership=True`, which is set to `False` by default when not passed.
 
+
 Importing plugins:
 ```python
 plugins_list = plugin_manager.import_plugins()
 ```
 
+
 Importing a singe plugin by file name:
 ```python
 single_plugin = plugin_manager.import_plugin('PLUGIN_FILENAME_WITHOUT_PY_EXTENSION')
 ```
+In this case, the plugin will be imported no matter if a configuration for it exists. This importing method is developed for edge cases in which the imported plugin will be
+executed only once.
+
 
 Getting plugin information:
 ```python
 plugin_name = plugins_list[0]['name']
 plugin_executable_object = plugins_list[0]['plugin']
 ```
+
 
 Executing plugin with no parameters:
 ```python
@@ -58,6 +64,7 @@ Executing plugin with no parameters:
         print('The plugin returned: {}'.format(result))
 ```
 
+
 Executing plugin with parameters:
 ```python
     arguments_tuple = ('arg1', 'arg2', 'arg3')
@@ -68,6 +75,7 @@ Executing plugin with parameters:
     else:
         print('The plugin returned: {}'.format(result))
 ```
+
 
 Forcefully executing a plugin:
 ```python

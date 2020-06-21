@@ -19,9 +19,9 @@ class GeneralTest(unittest.TestCase):
         self.assertIsInstance(self.__class__.plugin_manager.import_plugins(), list)
 
     def test_single_plugin_import_and_execution(self):
-        plugin = self.__class__.plugin_manager.import_plugin('print_message')
+        plugin = self.__class__.plugin_manager.import_plugin('forced')
         self.assertIsNotNone(plugin)
-        self.assertIsNone(self.__class__.plugin_manager.execute_plugin(plugin))
+        self.assertEqual(self.__class__.plugin_manager.execute_plugin(plugin, is_forced=True), True)
 
     def test_print_message(self):
         plugins = self.__class__.plugin_manager.import_plugins()

@@ -11,7 +11,6 @@ class PluginManager():
         self.__will_verify_plugins_ownership = will_verify_ownership
 
         self.__load__plugins_configuration()
-        self.__plugins = None
 
     def import_plugins(self):
         plugins = list()
@@ -30,20 +29,40 @@ class PluginManager():
             plugin = __import__(plugin_name)
             plugins.append({'name' : plugin_name, 'plugin' : plugin})
 
-        self.__plugins = plugins
-        return self.__plugins
+        return plugins
+
+    def import_plugin(self, name):
+        plugins_directory_content = os.listdir(self.__plugins_folder_location)
+    
+        sys.path.insert(1, self.__plugins_folder_location)
+
+        for content in plugins_directory_content:
+            content_location = self.__plugins_folder_location + '/' + content
+
+            if os.path.isdir(content_location) or content == '__init__.py' or content.endswith('.pyc') or content.endswith('.json'):
+                continue
             
-    def execute_plugin(self, plugin, args=None):
+            plugin_name = content.replace('.py', '')
+            
+            if plugin_name == name:
+                plugin = __import__(plugin_name)
+                return {'name' : plugin_name, 'plugin' : plugin}
+        
+        return None
+
+    def execute_plugin(self, plugin, args=None, is_forced=False):
         plugin_name = plugin['name']
         plugin_config = self.__find_plugin_config(plugin_name)
         
-        if plugin_config == None or not plugin_config['enabled']:
+        if plugin_config == None or not plugin_config['enabled'] and not is_forced:
             return None
 
-        plugin_main_function = plugin_config['main_function']
-
-        result = self.__execute_function(plugin['plugin'], plugin_main_function, args)
-
+        if not is_forced:
+            plugin_main_function = plugin_config['main_function']
+            result = self.__execute_function(plugin['plugin'], plugin_main_function, args)
+        else:
+            result = self.__execute_function(plugin['plugin'], 'main', args)
+            
         return result
 
     def __execute_function(self, function_file, function_name, args=None):
@@ -58,7 +77,6 @@ class PluginManager():
                 raise MainFunctionNotFoundError() from None
             else:
                 raise
-
 
     def __find_plugin_config(self, plugin_name):
         for plugin_config in self.__plugins_configuration:

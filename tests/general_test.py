@@ -18,6 +18,11 @@ class GeneralTest(unittest.TestCase):
     def test_plugins_import(self):
         self.assertIsInstance(self.__class__.plugin_manager.import_plugins(), list)
 
+    def test_single_plugin_import_and_execution(self):
+        plugin = self.__class__.plugin_manager.import_plugin('print_message')
+        self.assertIsNotNone(plugin)
+        self.assertIsNone(self.__class__.plugin_manager.execute_plugin(plugin))
+
     def test_print_message(self):
         plugins = self.__class__.plugin_manager.import_plugins()
         self.assertIsNone(self.__class__.plugin_manager.execute_plugin(plugins[0], params[0]))

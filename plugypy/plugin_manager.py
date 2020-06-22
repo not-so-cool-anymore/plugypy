@@ -21,9 +21,13 @@ class PluginManager():
         for content in plugins_directory_content:
             content_location = self.__plugins_folder_location + '/' + content
 
-            if os.path.isdir(content_location) or content == '__init__.py' or content.endswith('.pyc') or content.endswith('.json'):
+            if (os.path.isdir(content_location) or content == '__init__.py' or 
+                    content.endswith('.pyc') or content.endswith('.json')):
                 continue
             
+            if self.__will_verify_plugins_ownership and self.__verify_plugin_ownership(content_location):
+                continue
+
             plugin_name = content.replace('.py', '')
             
             if self.__find_plugin_config(plugin_name) == None:
@@ -42,9 +46,13 @@ class PluginManager():
         for content in plugins_directory_content:
             content_location = self.__plugins_folder_location + '/' + content
 
-            if os.path.isdir(content_location) or content == '__init__.py' or content.endswith('.pyc') or content.endswith('.json'):
+            if (os.path.isdir(content_location) or content == '__init__.py' or 
+                    content.endswith('.pyc') or content.endswith('.json')):
                 continue
             
+            if self.__will_verify_plugins_ownership and self.__verify_plugin_ownership(content_location):
+                continue
+
             plugin_name = content.replace('.py', '')
             
             if plugin_name == name:
@@ -93,5 +101,14 @@ class PluginManager():
         with open(self.__config_file_location) as config_file:
             self.__plugins_configuration = json.load(config_file)
     
-    def __verify_plugin_ownership(self):
-        return True
+    def __verify_plugin_ownership(self, plugin_path):
+        file_owner_id = pwd.getpwuid(os.stat(plugin_path, follow_symlinks=False).st_uid).pw_uid
+        file_owner_username = pwd.getpwuid(os.getuid()).pw_name
+
+        if self.__is_sudo():
+            return str(file_owner_id) == os.environ['SUDO_UID']
+        else:
+            return file_owner_username == os.environ['USERNAME']
+
+    def __is_sudo(self):
+        return os.environ['SUDO_UID'] != None

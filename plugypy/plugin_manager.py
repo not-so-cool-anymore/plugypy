@@ -25,7 +25,8 @@ class PluginManager():
                     content.endswith('.pyc') or content.endswith('.json')):
                 continue
             
-            if self.__will_verify_plugins_ownership and self.__verify_plugin_ownership(content_location):
+            if self.__will_verify_plugins_ownership and not self.__verify_plugin_ownership(content_location):
+                print('nope')
                 continue
 
             plugin_name = content.replace('.py', '')
@@ -50,7 +51,7 @@ class PluginManager():
                     content.endswith('.pyc') or content.endswith('.json')):
                 continue
             
-            if self.__will_verify_plugins_ownership and self.__verify_plugin_ownership(content_location):
+            if self.__will_verify_plugins_ownership and not self.__verify_plugin_ownership(content_location):
                 continue
 
             plugin_name = content.replace('.py', '')
@@ -111,4 +112,8 @@ class PluginManager():
             return file_owner_username == os.environ['USERNAME']
 
     def __is_sudo(self):
-        return os.environ['SUDO_UID'] != None
+        try:
+            os.environ['SUDO_UID']
+            return True
+        except:
+            return False

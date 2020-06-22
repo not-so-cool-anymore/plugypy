@@ -12,7 +12,7 @@ params = [
 
 class GeneralTest(unittest.TestCase):
     def test_plugin_manager_instantiation(self):
-        self.__class__.plugin_manager = plugypy.PluginManager(current_folder + '/plugins', current_folder + '/plugins/config.json')
+        self.__class__.plugin_manager = plugypy.PluginManager(current_folder + '/plugins', current_folder + '/plugins/config.json', will_verify_ownership=True)
         self.assertIsInstance(self.plugin_manager, plugypy.PluginManager)
 
     def test_plugins_import(self):

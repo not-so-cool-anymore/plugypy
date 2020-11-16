@@ -1,5 +1,5 @@
 # PlugyPy
-PlugyPy is a lightweight Python plugin system. It allows executing Python in the form of plugins during program's runtime.
+![plugypy](https://socialify.git.ci/not-so-cool-anymore/plugypy/image?description=1&font=KoHo&language=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Dark)
 
 ## Installation
 You can install the plugin system from PyPi with:

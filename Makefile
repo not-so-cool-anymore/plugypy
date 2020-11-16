@@ -8,5 +8,6 @@ clean-build:
 	rm --force --recursive dist/
 	rm --force --recursive *.egg-info
 
-build:
+build-and-upload:
 	python3 setup.py sdist bdist_wheel
+	python3 -m twine upload --repository testpypi dist/*

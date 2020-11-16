@@ -1,5 +1,5 @@
 # PlugyPy
-![plugypy](https://socialify.git.ci/not-so-cool-anymore/plugypy/image?description=1&font=KoHo&language=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Dark)
+![plugypy](https://socialify.git.ci/not-so-cool-anymore/plugypy/image?description=1&descriptionEditable=PlugyPy%20is%20a%20lightweight%20Python%20plugin%20system.%20It%20allows%20executing%20Python%20in%20the%20form%20of%20plugins%20during%20program%27s%20runtime.&font=KoHo&language=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Dark)
 
 ## Installation
 You can install the plugin system from PyPi with:

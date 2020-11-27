@@ -57,7 +57,6 @@ class PluginManager():
                 return getattr(plugin, function_name)(*args)
 
         except (AttributeError,) as err:
-            print(err)
             if type(err) == AttributeError:
                 raise FunctionNotFoundError() from None
             else:

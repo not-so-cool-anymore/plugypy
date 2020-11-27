@@ -2,8 +2,9 @@ import os
 import pwd
 import sys
 import json
-from .plugypy_errors import MainFunctionNotFoundError
-from .configuration_deserializer import *
+from .plugypy_errors import FunctionNotFoundError
+from .configuration_deserializer import ConfigurationDeserializer, Configuration
+
 class PluginManager():
     __configuration: Configuration
 
@@ -44,6 +45,23 @@ class PluginManager():
             loaded_plugins.append({'name': plugin, 'plugin': loaded_plugin})
         
         return loaded_plugins
+
+    def execute_plugin_function_by_name(self, plugin, function_name = 'main', args = None):
+        self.__execute_function(plugin, function_name, args)
+
+    def __execute_function(self, plugin, function_name, args=None):
+        try:
+            if args == None:
+                return getattr(plugin, function_name)()
+            else:
+                return getattr(plugin, function_name)(*args)
+
+        except (AttributeError,) as err:
+            print(err)
+            if type(err) == AttributeError:
+                raise FunctionNotFoundError() from None
+            else:
+                raise
 
     def __find_plugin_config(self, plugin_name):
         for plugin_config in self.__configuration.plugins:

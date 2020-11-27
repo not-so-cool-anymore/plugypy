@@ -5,5 +5,5 @@ __all__ = [
 ]
 
 from plugypy.plugin_manager import PluginManager
-from plugypy.plugypy_errors import MainFunctionNotFoundError
+from plugypy.plugypy_errors import *
 from plugypy.configuration_deserializer import *

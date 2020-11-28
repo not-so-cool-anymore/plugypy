@@ -1,3 +1,4 @@
+from .plugin import Plugin
 
 class Configuration(object):
     will_load_all: bool

@@ -1,5 +1,6 @@
 import json
 from .plugypy_errors import  InvalidConfigurationFile
+from .configuration import Configuration
 
 class ConfigurationDeserializer():
     def __init__(self, config_file_location):

@@ -1,5 +1,5 @@
 {
-	"load_all": false, 
+	"will_load_all": false, 
 	"plugins": [
 		{
 		"name" : "print_message",

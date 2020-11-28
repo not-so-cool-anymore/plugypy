@@ -1,14 +1,6 @@
 import json
 from .plugypy_errors import  InvalidConfigurationFile
 
-class Configuration(object):
-    load_all: bool
-    plugins: dict
-
-    def __init__(self, plugins: dict, load_all: bool):
-        self.plugins = plugins
-        self.load_all = load_all
-
 class ConfigurationDeserializer():
     def __init__(self, config_file_location):
         self.__config_file_location =  config_file_location

@@ -20,12 +20,10 @@ class PluginManager():
         for content in plugins_directory_content:
             content_location = self.__plugins_folder_location + '/' + content
 
-            if (os.path.isdir(content_location) or content == '__init__.py' or 
-                    content.endswith('.pyc') or content.endswith('.json')):
+            if (os.path.isdir(content_location) or content == '__init__.py' or content.endswith('.json')):
                 continue
             
             if self.__will_verify_plugins_ownership and not self.__verify_plugin_ownership(content_location):
-                print('nope')
                 continue
 
             plugins.append(content.replace('.py', ''))
@@ -42,12 +40,12 @@ class PluginManager():
                     continue
 
             loaded_plugin = __import__(plugin)
-            loaded_plugins.append({'name': plugin, 'plugin': loaded_plugin})
+            loaded_plugins.append({'name': plugin, 'object': loaded_plugin})
         
         return loaded_plugins
 
-    def execute_plugin_function_by_name(self, plugin, function_name = 'main', args = None):
-        self.__execute_function(plugin, function_name, args)
+    def execute_plugin_function(self, plugin, function_name = 'main', args = None):
+        self.__execute_function(plugin['object'], function_name, args)
 
     def __execute_function(self, plugin, function_name, args=None):
         try:

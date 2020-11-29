@@ -21,7 +21,7 @@ class PluginManager():
             content_location = self.__plugins_folder_location + '/' + content
 
             if (os.path.isdir(content_location) or content == '__init__.py' or content.endswith('.json')):
-                continue
+                continue  
             
             if self.__will_verify_plugins_ownership and not self.__verify_plugin_ownership(content_location):
                 continue

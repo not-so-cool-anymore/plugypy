@@ -2,16 +2,16 @@
 	"will_load_all": false, 
 	"plugins": [
 		{
-		"name" : "print_message",
-		"is_enabled" : true
+			"name" : "print_message",
+			"is_enabled" : true
 		},
 		{
-		"name" : "print_argument",
-		"is_enabled" : true
+			"name" : "print_argument",
+			"is_enabled" : true
 		},
 		{
-		"name" : "sum",
-		"is_enabled" : true
+			"name" : "sum",
+			"is_enabled" : true
 		}
 	]
 }

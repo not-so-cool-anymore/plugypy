@@ -1,0 +1,17 @@
+{
+    "will_load_all": true,
+    "plugins": [
+        {
+            "name": "example_plugin_name_0",
+            "is_enabled": true
+        },
+        {
+            "name": "example_plugin_name_1",
+            "is_enabled": false
+        },
+        {
+            "name": "example_plugin_name_2",
+            "is_enabled": true
+        }
+    ] 
+}

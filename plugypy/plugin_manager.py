@@ -34,7 +34,7 @@ class PluginManager():
         sys.path.insert(1, self.__plugins_folder_location)
         
         for plugin in plugins_list:
-            if not self.__configuration.load_all:
+            if not self.__configuration.will_load_all:
                 plugin_config = self.__find_plugin_config(plugin)
                 if plugin_config == None or not plugin_config['is_enabled']:
                     continue

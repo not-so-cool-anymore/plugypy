@@ -44,7 +44,7 @@ An example of a config file is:
 }
 ```
 
-Where `name` is the name of the plugin file without the `.py` file extension, and `enabled` is the boolean variable that indicates whether file will be executed (when `true`) or not (when `false`).
+Where `name` is the name of the plugin file without the `.py` file extension, and `enabled` is the boolean variable that indicates whether a plugin will be loaded (when `true`) or not (when `false`).
 
 ## Usage
 Importing the plugin system:
@@ -65,7 +65,7 @@ Creating a plugin manager object:
 plugin_manager = plugypy.PluginManager('/path/to/plugins/directory', configuration)
 ```
 The plugin manager object has one extra feature - plugin ownership verification. This feature ensures that the plugin that is being executed
-belongs to the current user (or, if `sudo` is used to run the program - the `sudo` caller).
+belongs to the current user (or if `sudo` is used to run the program - the `sudo` caller).
 This feature can be activated via parsing one extra argument - `will_verify_ownership=True`, which is set to `False` by default when not passed.
 
 
@@ -80,7 +80,7 @@ Importing plugins:
 ```python
 plugins_list = plugin_manager.import_plugins(discovered_plugins)
 ```
-`plugins_list` is a list of map objects that has a `name` key and an `object` value of imported executable Python module (plugin executable).
+`plugins_list` is a list of map objects that has a `name` key and an `object` value of the imported executable Python module (plugin executable).
 
 
 Importing a singe plugin by file name:
@@ -91,7 +91,7 @@ In this case, the plugin will be imported no matter if a configuration for it ex
 executed only once.
 
 
-Getting plugin information:
+Getting a plugin's information:
 ```python
 plugin_name = plugins_list[n]['name']
 plugin_executable_object = plugins_list[n]['object']
@@ -99,7 +99,7 @@ plugin_executable_object = plugins_list[n]['object']
 `n` is an index of a plugin.
 
 
-Executing a plugin function with no parameters:
+Executing a plugin's function with no parameters:
 ```python
 plugin = plugins_list[n]
 plugin_result = plugin_manager.execute_plugin_function(plugin, 'function_name')
@@ -112,7 +112,7 @@ else:
 `n` is an index of a plugin.
 
 
-Executing plugin with parameters:
+Executing a plugin's function with parameters:
 ```python
 plugin = plugins_list[n]
 

@@ -11,7 +11,7 @@ pip install PlugyPy
 Or locally by cloning the repository:
 
 ```
-git clone git@github.com:not-so-cool-anymore/plugypy.git
+git clone https://github.com/not-so-cool-anymore/plugypy.git
 ```
 and then running the setup file in the main directory with:
 ```

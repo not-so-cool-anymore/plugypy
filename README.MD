@@ -18,25 +18,69 @@ and then running the setup file in the main directory with:
 pip install .
 ```
 
+## Writing a configuration file
+A PlugyPy configuration (or config) file is a JSON file that contains a deserialized representation of a PlugyPy `Configuration` object.
+The `Configuration` object consists of a boolean named `will_load_all` and a list named `plugins`.
+`plugins` is a list of PlugyPy `Plugin` objects  `will_load_all` determines whether all of the plugins in the plugins directory will be loaded or only the enabled ones.
+
+An example of a config file is:
+```json
+{
+    "will_load_all": true,
+    "plugins": [
+        {
+            "name": "example_plugin_name_0",
+            "is_enabled": true
+        },
+        {
+            "name": "example_plugin_name_1",
+            "is_enabled": false
+        },
+        {
+            "name": "example_plugin_name_2",
+            "is_enabled": true
+        }
+    ] 
+}
+```
+
+Where `name` is the name of the plugin file without the `.py` file extension, and `enabled` is the boolean variable that indicates whether a plugin will be loaded (when `true`) or not (when `false`).
+
 ## Usage
 Importing the plugin system:
 ```python
 import plugypy
-``` 
+```
+
+
+Deserializing JSON configuration file into a `Configuration` object.
+```python
+configuration_deserializer = ConfigurationDeserializer('/path/to/configuration/file')
+configuration = configuration_deserializer.deserialize_config()
+```
+
 
 Creating a plugin manager object:
 ```python
-plugin_manager = plugypy.PluginManager('/path/to/plugins/directory', 'path/to/plugins/configuration/file.json')
+plugin_manager = plugypy.PluginManager('/path/to/plugins/directory', configuration)
 ```
 The plugin manager object has one extra feature - plugin ownership verification. This feature ensures that the plugin that is being executed
-belongs to the current user (or, if `sudo` is used to run the program - the `sudo` caller).
+belongs to the current user (or if `sudo` is used to run the program - the `sudo` caller).
 This feature can be activated via parsing one extra argument - `will_verify_ownership=True`, which is set to `False` by default when not passed.
+
+
+Discovering plugins:
+```python
+discovered_plugins = plugin_manager.discover_plugins()
+```
+`discover_plugins` is a list of all the plugins in a given plugins directory.
 
 
 Importing plugins:
 ```python
-plugins_list = plugin_manager.import_plugins()
+plugins_list = plugin_manager.import_plugins(discovered_plugins)
 ```
+`plugins_list` is a list of map objects that has a `name` key and an `object` value of the imported executable Python module (plugin executable).
 
 
 Importing a singe plugin by file name:
@@ -47,69 +91,39 @@ In this case, the plugin will be imported no matter if a configuration for it ex
 executed only once.
 
 
-Getting plugin information:
+Getting a plugin's information:
 ```python
-plugin_name = plugins_list[0]['name']
-plugin_executable_object = plugins_list[0]['plugin']
+plugin_name = plugins_list[n]['name']
+plugin_executable_object = plugins_list[n]['object']
 ```
+`n` is an index of a plugin.
 
 
-Executing plugin with no parameters:
+Executing a plugin's function with no parameters:
 ```python
-    plugin_result = plugin_manager.execute_plugin(plugins_list[0])
-    
-    if plugin_result == None:
-        print('The plugin returned no result')
-    else:
-        print('The plugin returned: {}'.format(result))
+plugin = plugins_list[n]
+plugin_result = plugin_manager.execute_plugin_function(plugin, 'function_name')
+
+if plugin_result == None:
+    print('The plugin returned no result')
+else:
+    print('The plugin returned: {}'.format(result))
 ```
+`n` is an index of a plugin.
 
 
-Executing plugin with parameters:
+Executing a plugin's function with parameters:
 ```python
-    arguments_tuple = ('arg1', 'arg2', 'arg3')
-    plugin_result = plugin_manager.execute_plugin(plugins_list[0], args=arguments_tuple)
-    
-    if plugin_result == None:
-        print('The plugin returned no result')
-    else:
-        print('The plugin returned: {}'.format(result))
+plugin = plugins_list[n]
+
+arguments_tuple = ('arg1', 'arg2', 'arg3')
+plugin_result = plugin_manager.execute_plugin_function(plugin, 'function_name', args=arguments_tuple)
+
+if plugin_result == None:
+    print('The plugin returned no result')
+else:
+    print('The plugin returned: {}'.format(result))
 ```
+`n` is an index of a plugin.
 
-
-Forcefully executing a plugin:
-```python
-    arguments_tuple = ('arg1', 'arg2', 'arg3')
-    plugin_result = plugin_manager.execute_plugin(plugins_list[0], args=arguments_tuple, is_forced=True)
-    
-    if plugin_result == None:
-        print('The plugin returned no result')
-    else:
-        print('The plugin returned: {}'.format(result))
-```
-Note that in this case we do not supply main function of the plugin. The PluginManager automatically calls
-function named `main` and assumes that it is the main function of the plugin. If no function with that name exists a MainFunctionNotFoundError will be thrown. 
-
-## Writing a configuration file
-The configuration (or config) file is a JSON file that contains a few important bits of
-information by which the plugin manager knows what to do with a given plugin.
-
-An example for a config file is:
-```json
-[
-        {
-        "name" : "demo_plugin_0",
-        "main_function" : "main_zero",
-        "enabled" : true
-        },
-        {
-        "name" : "demo_plugin_1",
-        "main_function" : "main_one",
-        "enabled" : false
-        },
-
-]
-```
-
-Where `name` is the name of the plugin file without the `.py` file extension, `main_function` is the function that is being called,
-and `enabled` is the boolean variable that indicates if the file will be executed (when `true`) or not (when `false`).
+`args` must be a tuple of argument/s.

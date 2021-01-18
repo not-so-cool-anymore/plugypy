@@ -5,7 +5,7 @@ with open('README.MD') as readme:
 
 setuptools.setup(
     name='PlugyPy',
-    version='1.0.5',
+    version='1.1.0',
     author='Ivan Zlatanov',
     author_email='i_zlatanov@protonmail.com',
     description='A lightweigh Python plugin system',
@@ -18,5 +18,5 @@ setuptools.setup(
         "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.4'   
+    python_requires='>=3.4'
 )

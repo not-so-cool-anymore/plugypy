@@ -21,9 +21,9 @@ class PluginManager():
             content_location = self.__plugins_folder_location + '/' + content
 
             if (os.path.isdir(content_location) or content == '__init__.py' or content.endswith('.json')):
-                continue  
-            
-            #if self.__will_verify_plugins_ownership and not self.__verify_plugin_ownership(content_location):
+                continue
+
+            # if self.__will_verify_plugins_ownership and not self.__verify_plugin_ownership(content_location):
             #    continue
 
             plugins.append(content.replace('.py', ''))
@@ -32,7 +32,7 @@ class PluginManager():
     def import_plugins(self, plugins_list):
         loaded_plugins = list()
         sys.path.insert(1, self.__plugins_folder_location)
-        
+
         for plugin in plugins_list:
             if not self.__configuration.will_load_all:
                 plugin_config = self.__find_plugin_config(plugin)
@@ -41,10 +41,10 @@ class PluginManager():
 
             loaded_plugin = __import__(plugin)
             loaded_plugins.append({'name': plugin, 'object': loaded_plugin})
-        
+
         return loaded_plugins
 
-    def execute_plugin_function(self, plugin, function_name = 'main', args = None):
+    def execute_plugin_function(self, plugin, function_name='main', args=None):
         return self.__execute_function(plugin['object'], function_name, args)
 
     def __execute_function(self, plugin, function_name, args=None):
@@ -62,11 +62,11 @@ class PluginManager():
 
     def __find_plugin_config(self, plugin_name):
         for plugin_config in self.__configuration.plugins:
-            if plugin_config['name'] == plugin_name:
+            if plugin_config.name == plugin_name:
                 return plugin_config
 
         return None
-    
+
     # def __verify_plugin_ownership(self, plugin_path):
     #     file_owner_id = pwd.getpwuid(os.stat(plugin_path, follow_symlinks=False).st_uid).pw_uid
     #     file_owner_username = pwd.getpwuid(os.getuid()).pw_name
